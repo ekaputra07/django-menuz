@@ -12,24 +12,22 @@ INSTALATION AND USAGE:
 ----------------------
 Once you install it via setup.py, easy_install or pip.
 
-1. add **menuz** into your **INSTALLED_APPS** Django settings.py file.
+* add **menuz** into your **INSTALLED_APPS** Django settings.py file.
 
-2. add codes below into your project **urls.py** :
+* add codes below into your project **urls.py** :
 
 ::
 
     from menuz import registry
     registry.autodiscover()
 
-3. The above code is menu autodiscovery, will search all file named menu.py in each django application directory, if found, will register into the menuz registry. Works exactly the same with Django Admin autodiscover.
-
-4. Also add url config below into projects urls configuration.
+* Also add url config below into projects urls configuration.
 
 ::
 
     url(r'', include('menuz.urls')),
 
-5. Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter. example:
+* Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter. example:
 
 ::
 
@@ -44,7 +42,7 @@ Once you install it via setup.py, easy_install or pip.
         ('position_id_must_be_unique', u'Position title goes here'),
     )
 
-6. If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
+* If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
 
 ::
 
@@ -58,10 +56,10 @@ Once you install it via setup.py, easy_install or pip.
         etc.
     )
 
-    Above links must inbound link, not links to other sites(outbound link).
-    For Outbound link menu, use Custom link in menu creation admin page.
+* Above links must inbound link, not links to other sites(outbound link).
+* For Outbound link menu, use Custom link in menu creation admin page.
 
-7. To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
+* To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
 
 ::
 
@@ -71,7 +69,7 @@ Once you install it via setup.py, easy_install or pip.
 
     menuz.register(Product)
 
-8. Or if you want to do some filtering before registering it into menuz do as follows (file: menu.py).
+* Or if you want to do some filtering before registering it into menuz do as follows (file: menu.py).
 
 ::
 
