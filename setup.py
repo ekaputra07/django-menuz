@@ -20,7 +20,6 @@ setup(
     author = 'Eka Putra',
     author_email = 'ekaputra@balitechy.com',
     packages = find_packages(),
-    namespace_packages = ['menuz'],
     include_package_data = True,
     zip_safe = False,
     classifiers = [
