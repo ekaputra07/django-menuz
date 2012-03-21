@@ -1,6 +1,5 @@
-======================================
-            DJANGO MENUZ
-======================================
+DJANGO MENUZ
+=============
 
 Django Menuz is another menu app for Django.
 
@@ -98,7 +97,7 @@ Once you install it via setup.py, easy_install or pip,
 
 
 CALLING MENU ITEMS IN TEMPLATE
---------------------------
+-----------------------------
 
 ** example calling menu items as template context:
 
