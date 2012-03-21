@@ -9,7 +9,7 @@ template tags to call menu in specified location.
 With it's drag and drop features, now its easy to assign menu items for specified location in template drag and drop it if you want to re-order the menu item position.
 
 INSTALLATION AND USAGE:
-----------------------
+-----------------------
 Once you install it via setup.py, easy_install or pip.
 
 * add **menuz** into your **INSTALLED_APPS** Django settings.py file.
