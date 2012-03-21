@@ -1,4 +1,4 @@
-include README
+include README.rst
 include LICENSE
 recursive-include menuz/static *
 recursive-include menuz/templates *
