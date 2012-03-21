@@ -1,35 +1,33 @@
 DJANGO MENUZ
-=============
+============
 
 Django Menuz is another menu app for Django.
 
 It mainly inspired by how easy menu creation ini WordPress. Django Menuz provides
 template tags to call menu in specified location.
 
-With it's drag and drop features, now its easy to assign menu items for specified location in template
-drag and drop it if you want to re-order the menu item position.
-
-TODO:
------
-* Add support for hierarchical menu creation.
-* Add filter in model menu selector, so it's will be easier to find record to use as menu item.
-
+With it's drag and drop features, now its easy to assign menu items for specified location in template drag and drop it if you want to re-order the menu item position.
 
 INSTALATION AND USAGE:
-======================
+----------------------
 Once you install it via setup.py, easy_install or pip.
 
-* add **menuz** into your **INSTALLED_APPS** Django settings.py file.
-* add codes below into your project **urls.py**.::
+1. add **menuz** into your **INSTALLED_APPS** Django settings.py file.
+
+2. add codes below into your project **urls.py** :
+::
+
     from menuz import registry
     registry.autodiscover()
 
-* The above code is menu autodiscovery, will search all file named menu.py in each django application directory, if found, will register into the menuz registry. Works exactly the same with Django Admin autodiscover.
+3. The above code is menu autodiscovery, will search all file named menu.py in each django application directory, if found, will register into the menuz registry. Works exactly the same with Django Admin autodiscover.
 
-* Also add url config below into projects urls configuration.::
+4. Also add url config below into projects urls configuration.::
     url(r'', include('menuz.urls')),
 
-* Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter. example:::
+5. Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter. example:
+::
+
     #Available menus on site
     AVAILABLE_MENUS = (
         ('top_menu', u'Main top menu'),
@@ -41,8 +39,9 @@ Once you install it via setup.py, easy_install or pip.
         ('position_id_must_be_unique', u'Position title goes here'),
     )
 
+6. If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
+::
 
-* If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.::
     AVAILABLE_INNERLINKS = (
         ('/this_page/', 'This Page'),
         ('/that_page/', 'That Page'),
@@ -53,17 +52,20 @@ Once you install it via setup.py, easy_install or pip.
         etc.
     )
 
-Above links must inbound link, not links to other sites(outbound link). For Outbound link menu, use Custom link in menu creation admin page.
+    Above links must inbound link, not links to other sites(outbound link).
+    For Outbound link menu, use Custom link in menu creation admin page.
 
+7. To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
+::
 
-* To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).::
     # file: menu.py
     from menuz.registry import menuz
     from catalog.models import Product
 
     menuz.register(Product)
 
-    or if you want to do some filtering before registering it into menuz do as follows (file: menu.py)::
+8. Or if you want to do some filtering before registering it into menuz do as follows (file: menu.py).
+::
 
     from menuz.registry import menuz
     from catalog.models import Product
@@ -78,9 +80,9 @@ that way, the menu item selector will not display all available products, but wi
 
 
 CALLING MENU ITEMS IN TEMPLATE
-==============================
+------------------------------
 
-** example calling menu items as template context::
+**example calling menu items as template context**::
 
     {% load menuz_tags %}
     {% get_menu top_menu as tmenu %}
@@ -92,10 +94,15 @@ CALLING MENU ITEMS IN TEMPLATE
         {% endfor %}
     </ul>
 
-** example calling menu items as html list::
+**example calling menu items as html list**::
 
     {% load menuz_tags %}
     <ul>
         {% list_menu top_menu %}
     </ul>
+
+TODO:
+-----
+1. Add support for hierarchical menu creation.
+2. Add filter in model menu selector, so it's will be easier to find record to use as menu item.
 
