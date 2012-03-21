@@ -11,16 +11,16 @@ drag and drop it if you want to re-order the menu item position.
 
 TODO:
 -----
-1. Add support for hierarchical menu creation.
-2. Add filter in model menu selector, so it's will be easier to find record to use as menu item.
+* Add support for hierarchical menu creation.
+* Add filter in model menu selector, so it's will be easier to find record to use as menu item.
 
 
 INSTALATION AND USAGE:
 ======================
 Once you install it via setup.py, easy_install or pip.
 
-1. add **menuz** into your **INSTALLED_APPS** Django settings.py file.
-2. add codes below into your project **urls.py**::
+* add **menuz** into your **INSTALLED_APPS** Django settings.py file.
+* add codes below into your project **urls.py**::
 
     from menuz import registry
     registry.autodiscover()
@@ -29,28 +29,25 @@ Once you install it via setup.py, easy_install or pip.
     if found, will register into the menuz registry. Works exactly the same with Django Admin autodiscover.
 
     and also add code below into projects urls configuration::
-    #-------------------------------#
     url(r'', include('menuz.urls')),
-    #-------------------------------#
 
-3. Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter.
-   example::
-    #------------------------------------------------#
-    #Available menus on site
-    AVAILABLE_MENUS = (
-        ('top_menu', u'Main top menu'),
-        ('side_menu', u'Menu at sidebar'),
-        ('footer_1', u'Menu at column 1 of footer'),
-        ('footer_2', u'Menu at column 2 of footer'),
-        ('footer_3', u'Menu at column 3 of footer'),
-        ('footer_4', u'Menu at column 4 of footer'),
-        ...
-        ...
-        ('position_id_must_be_unique', u'Position title goes here'),
-    )
-    #------------------------------------------------#
+* Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter.
+  example::
+       #Available menus on site
+       AVAILABLE_MENUS = (
+            ('top_menu', u'Main top menu'),
+            ('side_menu', u'Menu at sidebar'),
+            ('footer_1', u'Menu at column 1 of footer'),
+            ('footer_2', u'Menu at column 2 of footer'),
+            ('footer_3', u'Menu at column 3 of footer'),
+            ('footer_4', u'Menu at column 4 of footer'),
+            ...
+            ...
+            ('position_id_must_be_unique', u'Position title goes here'),
+        )
 
-4. If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items,
+
+* If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items,
    add **AVAILABLE_INNERLINKS** in your project **settings.py**::
 
     AVAILABLE_INNERLINKS = (
@@ -67,7 +64,7 @@ Once you install it via setup.py, easy_install or pip.
     For Outbound link menu, use Custom link in menu creation admin page.
 
 
-5. To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same
+* To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same
    level as application urls.py and register our model as following example (file: menu.py)::
 
    # file: menu.py
@@ -76,7 +73,7 @@ Once you install it via setup.py, easy_install or pip.
 
    menuz.register(Product)
 
-    or if you want to do some filtering before registering it into menuz do as follows (file: menu.py)::
+   or if you want to do some filtering before registering it into menuz do as follows (file: menu.py)::
 
    from menuz.registry import menuz
    from catalog.models import Product
