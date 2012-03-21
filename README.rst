@@ -8,7 +8,7 @@ template tags to call menu in specified location.
 
 With it's drag and drop features, now its easy to assign menu items for specified location in template drag and drop it if you want to re-order the menu item position.
 
-INSTALATION AND USAGE:
+INSTALLATION AND USAGE:
 ----------------------
 Once you install it via setup.py, easy_install or pip.
 
@@ -35,14 +35,13 @@ Once you install it via setup.py, easy_install or pip.
     AVAILABLE_MENUS = (
         ('top_menu', u'Main top menu'),
         ('side_menu', u'Menu at sidebar'),
-        ('footer_1', u'Menu at column 1 of footer'),
-        ('footer_2', u'Menu at column 2 of footer'),
-        ('footer_3', u'Menu at column 3 of footer'),
-        ('footer_4', u'Menu at column 4 of footer'),
         ('position_id_must_be_unique', u'Position title goes here'),
+        ...
+        ...
+        etc.
     )
 
-* If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
+* If you have few fix/static url into your application and want to include so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
 
 ::
 
@@ -83,6 +82,19 @@ Once you install it via setup.py, easy_install or pip.
 
 We registering extra callback that will be called when menuz will display selectable menu items in admin area,
 that way, the menu item selector will not display all available products, but will display active products only.
+
+Important:
+----------
+To make Model menu items links correctly to its url, your model must utilize **get_absolute_url()** function. Because this is the only standard way to retrieve object urls, at least for django-menuz.
+
+example:
+
+::
+    from django.db.models import permalink
+
+    @permalink
+    get_absolute_url():
+        return ('some_page', None, {'slug': self.slug})
 
 
 CALLING MENU ITEMS IN TEMPLATE
