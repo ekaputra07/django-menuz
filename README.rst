@@ -83,7 +83,7 @@ Once you install it via setup.py, easy_install or pip.
 We registering extra callback that will be called when menuz will display selectable menu items in admin area,
 that way, the menu item selector will not display all available products, but will display active products only.
 
-Important:
+IMPORTANT:
 ----------
 To make Model menu items links correctly to its url, your model must utilize **get_absolute_url()** function. Because this is the only standard way to retrieve object urls, at least for django-menuz.
 
