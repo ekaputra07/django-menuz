@@ -1,0 +1,128 @@
+{% load i18n %}
+{% load adminmedia %}
+{% load menuz_tags %}
+<div id="content-main">
+<fieldset class="module menuz">
+
+<!-- menu container -->
+<div class="menu_container">
+<div class="menu_loading">Please wait...</div>
+{% for item in menu_items %}
+    <div class="menu_item {{item.content_type}}_{{item.id}}" rel="{{item.id}}">
+    <h2>
+    <span class="move"></span>
+    <span class="title">{{item.title|truncatechars_right:40}}</span>
+    <a href="javascript:;" class="delete" title="Delete" onclick="delete_menu('{{item.content_type}}', {{item.id}});"/></a>
+    <a href="javascript:;" class="edit" title="Edit" onclick="toggle_menu_editor('{{item.content_type}}', {{item.id}});"/></a>
+    </h2>
+    <div class="menu_editor {{item.content_type}}_{{item.id}}">
+    <!-- form -->
+    {% csrf_token %}
+    <input type="hidden" name="mtype" value="{{item.content_type}}">
+    <input type="hidden" name="item_id" value="{{item.id}}">
+    <p>
+    <label for="id_{{item.content_type}}_title_{{item.id}}">Title</label>
+    <input type="text" name="{{item.content_type}}_title_{{item.id}}" id="id_{{item.content_type}}_title_{{item.id}}" value="{{item.title}}" class="vTextField"/>
+    </p>
+
+    {% if item.content_type == 'custom' %}
+    <p>
+    <label for="id_{{item.content_type}}_url_{{item.id}}">URL</label>
+    <input type="text" name="{{item.content_type}}_url_{{item.id}}" id="id_{{item.content_type}}_url_{{item.id}}" value="{{item.url}}" class="vTextField"/>
+    </p>
+    {% endif %}
+
+    <p>
+    <input type="button" name="btn_update" value="Update" onclick="update_menu('{{item.content_type}}',{{item.id}});"/>
+    <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="menu_update_loading loading_{{item.id}}"/>
+    </p>
+    <!-- enddform -->
+    </div>
+    </div>
+{% endfor %}
+</div>
+<!-- end menu container -->
+
+<!-- menu available -->
+<div class="menu_available">
+
+<!--
+Line below is not so good practice and not valid Html structure,
+because I nested few form inside main django form.
+can any body give me suggestion to solve this problem?
+but, for now, i do it this way, since this for admin area
+and need this to use benefit from jQuery form serializeAnythinx.
+-->
+
+    <div class="block_menu menu_custom">
+    <h3>Custom Link</h3>
+    <form name="menu_custom_form" id="id_menu_custom_form" method="post" action="">
+    {% csrf_token %}
+    <input type="hidden" name="mtype" value="custom">
+    <input type="hidden" name="menu_id" value="{{menu_id}}">
+    <div class="block_content">
+    <p>
+    <label for="id_custom_title">Title</label>
+    <input type="text" name="custom_title" id="id_custom_title" class="vTextField"/>
+    </p>
+
+    <p>
+    <label for="id_custom_url">URL</label>
+    <input type="text" name="custom_url" id="id_custom_url" class="vTextField"/>
+    </p>
+    </div>
+    <p>
+    <input type="button" name="custom_add" id="id_custom_add" value="Add to Menu" onclick="add_to_menu('custom');"/>
+    <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="loading"/>
+    </p>
+    </form>
+    </div>
+
+    {% if innerlinks %}
+    <div class="block_menu menu_innerlink">
+    <h3>Inner Links</h3>
+    <form name="menu_innerlink_form" id="id_menu_innerlink_form" method="post" action="">
+    {% csrf_token %}
+    <input type="hidden" name="mtype" value="innerlink">
+    <input type="hidden" name="menu_id" value="{{menu_id}}">
+    <div class="block_content">
+    {% for item in innerlinks %}
+    <input type="checkbox" name="innerlink" value="{{item.0}}${{item.1}}" id="id_innerlink_{{forloop.counter}}"/> <label for="id_innerlink_{{forloop.counter}}">{{item.1}}</label><br />
+    {% endfor %}
+    </div>
+    <p>
+    <input type="button" name="innerlink_add" id="id_innerlink_add" value="Add to Menu" onclick="add_to_menu('innerlink');"/>
+    <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="loading"/>
+    </p>
+    </form>
+    </div>
+    {% endif %}
+
+    {% for menu in available_menus %}
+        <div class="block_menu menu_{{menu.type}}">
+        <h3>{{menu.name}}</h3>
+        <form name="menu_{{menu.type}}_form" id="id_menu_{{menu.type}}_form" method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="mtype" value="{{menu.type}}">
+        <input type="hidden" name="menu_id" value="{{menu_id}}">
+        <div class="block_content">
+        {% for item in menu.queryset %}
+        <input type="checkbox" name="{{menu.type}}" value="{{item.pk}}" id="{{menu.type}}_{{item.pk}}"/> <label for="{{menu.type}}_{{item.pk}}">{{item}}</label><br />
+        {% endfor %}
+        </div>
+        <p>
+        <input type="button" name="{{menu.type}}_add" id="id_{{menu.type}}_add" value="Add to Menu" onclick="add_to_menu('{{menu.type}}');"/>
+         <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="loading"/>
+        </p>
+        </form>
+        </div>
+    {% endfor %}
+
+
+<div class="clearfix"></iv>
+</div>
+<!-- end menu available -->
+
+</fieldset>
+</div>
+

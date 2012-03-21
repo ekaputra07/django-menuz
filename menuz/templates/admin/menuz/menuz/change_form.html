@@ -1,0 +1,37 @@
+{% extends 'admin/change_form.html' %}
+
+{% block extrahead %}
+{{block.super}}
+{% load adminmedia %}
+{% load static %}
+<link rel="stylesheet" href="{% admin_media_prefix %}menuz/css/menuz.css" type="text/css" />
+
+<script type="text/javascript" src="{% admin_media_prefix %}menuz/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}menuz/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script src="{% admin_media_prefix %}menuz/js/menuz.js" type="text/javascript"></script>
+<script>
+var csrf_token = '{{csrf_token}}';
+var add_menuz = '{% url add_menuz %}';
+var reorder_menuz = '{% url reorder_menuz %}';
+var delete_menuz = '{% url delete_menuz %}';
+var update_menuz = '{% url update_menuz %}';
+</script>
+{% endblock %}
+
+{% block after_field_sets %}
+  {% if object_id %}
+    {% load menuz_tags %}
+    {% menu_builder object_id %}
+  {% else %}
+<div id="content-main">
+<fieldset class="module">
+        <div class="form-row save_menu">
+                <div>
+                <input name="_continue" id="save_menu_btn" value="Add Menu Item &raquo;" type="submit">
+                </div>
+        </div>
+</fieldset>
+</div>
+  {% endif %}
+{% endblock %}
+

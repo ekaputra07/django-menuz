@@ -1,0 +1,130 @@
+.module.menuz{
+    padding:10px;
+}
+.clearfix{
+    clear:both;
+    height:0;
+}
+input#save_menu_btn{
+    padding:10px 10px;
+    font-weight:bold;
+    color:green;
+}
+img.loading, img.menu_update_loading{
+    display:none;
+}
+
+/*----------------- Menu Item ---------------------*/
+.menu_container{
+    width:28%;
+    float:left;
+    background:#fff;
+    border:1px dashed #ccc;
+    height:700px;
+    padding:5px;
+}
+.menu_container .menu_loading{
+    font-size:11px;
+    color:#555;
+    display:block;
+    padding:5px 0;
+    text-align:center;
+    margin-bottom:5px;
+    display:none;
+}
+.menu_container .menu_item{
+    padding:5px;
+    background:#eee;
+    border:1px solid #ddd;
+    margin-bottom:5px;
+}
+.menu_container .menu_item.hovered{
+    border:1px solid #aaa;
+}
+.menu_container .menu_item h2{
+    background:none;
+    border:none;
+    color:#000;
+}
+.menu_container .menu_item h2 .title{
+    cursor:move;
+}
+.menu_container .menu_item h2 .move{
+    display:block;
+    width:7px;
+    height:15px;
+    background:url(../images/icons.png) no-repeat -132px -50px;
+    float:left;
+    margin-right:5px;
+}
+.menu_container .menu_item h2 a.edit{
+    width:10px;
+    height:8px;
+    background:url(../images/icons.png) no-repeat -67px -20px;
+    float:right;
+    display:block;
+    margin-top:2px;
+}
+.menu_container .menu_item h2 a.edit.active{
+    background:url(../images/icons.png) no-repeat -2px -20px;
+}
+.menu_container .menu_item h2 a.delete{
+    width:7px;
+    height:7px;
+    background:url(../images/icons.png) no-repeat -85px -213px;
+    float:right;
+    display:block;
+    margin-top:3px;
+    margin-left:10px;
+}
+.menu_container .menu_item .menu_editor{
+    border-top:1px solid #ddd;
+    padding:5px;
+    background:#f9f9f9;
+    display:none;
+}
+/*-----------AVAILABLE MENU STYLE-------------*/
+.menu_available{
+    width:70%;
+    float:left;
+    margin-left:10px;
+}
+.menu_available .error,
+.menu_editor input.error{
+    border:1px solid red;
+}
+.menu_available .block_menu{
+    width:250px;
+    padding:10px;
+    height:300px;
+    background:#f9f9f9;
+    float:left;
+    margin-left:10px;
+    margin-bottom:10px;
+    border:1px solid #ddd;
+}
+
+.menu_available .error{
+    border:1px solid red;
+}
+
+.menu_available .block_menu h3{
+    font-size:16px;
+    display:block;
+    border-bottom:1px solid #ccc;
+    padding-bottom:5px;
+    font-family:arial;
+    margin-top:-2px;
+}
+.menu_available .block_menu .block_content{
+    padding:5px 0;
+    overflow:auto;
+    height:210px;
+}
+.menu_available .block_menu p{
+    margin:5px 0;
+}
+.menu_available .block_menu input.vTextField{
+    padding:5px;
+}
+
