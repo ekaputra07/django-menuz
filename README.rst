@@ -25,10 +25,10 @@ Once you install it via setup.py, easy_install or pip.
     from menuz import registry
     registry.autodiscover()
 
-The above code is menu autodiscovery, will search all file named menu.py in each django application directory,
-if found, will register into the menuz registry. Works exactly the same with Django Admin autodiscover.
+    The above code is menu autodiscovery, will search all file named menu.py in each django application directory,
+    if found, will register into the menuz registry. Works exactly the same with Django Admin autodiscover.
 
-and also add code below into projects urls configuration::
+    and also add code below into projects urls configuration::
     #-------------------------------#
     url(r'', include('menuz.urls')),
     #-------------------------------#
@@ -50,7 +50,7 @@ and also add code below into projects urls configuration::
     )
     #------------------------------------------------#
 
-3. If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items,
+4. If you have few fix/static url into your application and want to include it so it's will be selectable as a menu items,
    add **AVAILABLE_INNERLINKS** in your project **settings.py**::
 
     AVAILABLE_INNERLINKS = (
@@ -63,11 +63,11 @@ and also add code below into projects urls configuration::
         etc.
     )
 
-Above links must inbound link, not links to other sites(outbound link).
-For Outbound link menu, use Custom link in menu creation admin page.
+    Above links must inbound link, not links to other sites(outbound link).
+    For Outbound link menu, use Custom link in menu creation admin page.
 
 
-3. To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same
+5. To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same
    level as application urls.py and register our model as following example (file: menu.py)::
 
    # file: menu.py
@@ -76,7 +76,7 @@ For Outbound link menu, use Custom link in menu creation admin page.
 
    menuz.register(Product)
 
-or if you want to do some filtering before registering it into menuz do as follows (file: menu.py)::
+    or if you want to do some filtering before registering it into menuz do as follows (file: menu.py)::
 
    from menuz.registry import menuz
    from catalog.models import Product
