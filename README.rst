@@ -90,6 +90,7 @@ To make Model menu items links correctly to its url, your model must utilize **g
 example:
 
 ::
+
     from django.db.models import permalink
 
     @permalink
