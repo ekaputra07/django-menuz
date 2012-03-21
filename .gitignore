@@ -1,0 +1,4 @@
+*.pyc
+dist
+django_menuz.egg-info
+
