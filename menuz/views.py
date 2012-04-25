@@ -9,7 +9,7 @@ from menuz.registry import get_menuz_object_model
 
 @login_required
 def add_menuz(request):
-    #if request.is_ajax():
+    if request.is_ajax():
         if request.method == 'POST':
             mtype = request.POST.get('mtype','')
             menu_id = request.POST.get('menu_id',0)

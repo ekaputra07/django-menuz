@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-25 14:53+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:6
+msgid "Menu Title"
+msgstr "Menü Titel"
+
+#: models.py:7
+msgid "Menu Position"
+msgstr "Menü Position"
+
+#: models.py:7
+msgid "This is position of the menu."
+msgstr "Die Position des Menüs."
+
+#: models.py:13
+msgid "Menu"
+msgstr "Menü"
+
+#: models.py:14
+msgid "Menus"
+msgstr "Menüs"
+
+#: templates/admin/menuz/menuz/change_form.html:31
+msgid "Add Menu Item"
+msgstr "Menü Punkt hinzufügen"
+
+#: templates/admin/menuz/menuz/menu_builder.html:9
+msgid "Please wait..."
+msgstr "Bitte warten..."
+
+#: templates/admin/menuz/menuz/menu_builder.html:24
+#: templates/admin/menuz/menuz/menu_builder.html:56
+msgid "Title"
+msgstr "Titel"
+
+#: templates/admin/menuz/menuz/menu_builder.html:30
+#: templates/admin/menuz/menuz/menu_builder.html:61
+msgid "URL"
+msgstr "URL"
+
+#: templates/admin/menuz/menuz/menu_builder.html:36
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: templates/admin/menuz/menuz/menu_builder.html:50
+msgid "Custom Link"
+msgstr "Externer Link"
+
+#: templates/admin/menuz/menuz/menu_builder.html:66
+#: templates/admin/menuz/menuz/menu_builder.html:83
+#: templates/admin/menuz/menuz/menu_builder.html:101
+msgid "Add to Menu"
+msgstr "Zum Menü hinzufügen"
+
+#: templates/admin/menuz/menuz/menu_builder.html:73
+msgid "Inner Links"
+msgstr "Interner Link"

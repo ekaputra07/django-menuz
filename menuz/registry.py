@@ -38,7 +38,6 @@ def autodiscover():
     from django.utils.importlib import import_module
 
     for app in settings.INSTALLED_APPS:
-        mod = import_module(app)
         try:
             before_import_registry = copy.copy(menuz.registry)
             import_module('%s.menu' % app)

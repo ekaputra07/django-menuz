@@ -1,15 +1,17 @@
 from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 class Menuz(models.Model):
-    title = models.CharField('Menu Title', max_length=50)
-    position = models.CharField('Menu Position', max_length=100, choices=settings.AVAILABLE_MENUS, help_text='This is the position of the menu.')
+    title = models.CharField(_('Menu Title'), max_length=50)
+    position = models.CharField(_('Menu Position'), max_length=100, choices=settings.AVAILABLE_MENUS, help_text=_('This is position of the menu.'))
 
     def __unicode__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Menu'
+        verbose_name = _('Menu')
+        verbose_name_plural = _('Menus')
 
 class MenuzItem(models.Model):
     menu = models.ForeignKey(Menuz)
