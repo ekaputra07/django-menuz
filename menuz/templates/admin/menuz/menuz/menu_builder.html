@@ -49,12 +49,13 @@
     {% for menu in available_menus %}
         <div class="block_menu menu_{{menu.type}}">
         <h3>{{menu.name}}</h3>
+        <label>{% trans 'Filter' %} :</label> <input type="text" name="search" class="search" value="" onkeyup="filter(this.value, 'menu_{{menu.type}}');"/><br /><br />
         {% csrf_token %}
         <input type="hidden" name="mtype" value="{{menu.type}}">
         <input type="hidden" name="menu_id" value="{{menu_id}}">
         <div class="block_content">
         {% for item in menu.queryset %}
-        <input type="checkbox" name="{{menu.type}}" value="{{item.pk}}" id="{{menu.type}}_{{item.pk}}"/> <label for="{{menu.type}}_{{item.pk}}">{{item}}</label><br />
+        <label for="{{menu.type}}_{{item.pk}}"><input type="checkbox" name="{{menu.type}}" value="{{item.pk}}" id="{{menu.type}}_{{item.pk}}"/> {{item}}</label>
         {% endfor %}
         </div>
         <p>
@@ -67,12 +68,13 @@
     {% if innerlinks %}
     <div class="block_menu menu_innerlink">
     <h3>{% trans 'Inner Links' %}</h3>
+    <label>{% trans 'Filter' %} :</label> <input type="text" name="search" class="search" value="" onkeyup="filter(this.value, 'menu_innerlink');"/><br /><br />
     {% csrf_token %}
     <input type="hidden" name="mtype" value="innerlink">
     <input type="hidden" name="menu_id" value="{{menu_id}}">
     <div class="block_content">
     {% for item in innerlinks %}
-    <input type="checkbox" name="innerlink" value="{{item.0}}${{item.1}}" id="id_innerlink_{{forloop.counter}}"/> <label for="id_innerlink_{{forloop.counter}}">{{item.1}}</label><br />
+    <label for="id_innerlink_{{forloop.counter}}"><input type="checkbox" name="innerlink" value="{{item.0}}${{item.1}}" id="id_innerlink_{{forloop.counter}}"/> {{item.1}}</label>
     {% endfor %}
     </div>
     <p>

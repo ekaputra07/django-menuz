@@ -180,6 +180,15 @@ function toggle_menu_editor(mtype, item_id){
     $('.menu_editor.'+mtype+'_'+item_id).slideToggle('fast');
 }
 
+function filter(keyword, menu){
+    $('.'+menu+' .block_content label').each(function(){
+        if($(this).text().search(new RegExp(keyword, "i")) < 0){
+            $(this).hide();
+        }else{
+            $(this).show();
+        }
+    });
+}
 /*--------- Update menu item----------*/
 function input_error(input_parent){
     $('.'+input_parent+' input.vTextField').addClass('error');

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-25 14:53+0800\n"
+"POT-Creation-Date: 2012-04-27 16:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,12 +45,12 @@ msgid "Please wait..."
 msgstr "Bitte warten..."
 
 #: templates/admin/menuz/menuz/menu_builder.html:24
-#: templates/admin/menuz/menuz/menu_builder.html:56
+#: templates/admin/menuz/menuz/menu_builder.html:94
 msgid "Title"
 msgstr "Titel"
 
 #: templates/admin/menuz/menuz/menu_builder.html:30
-#: templates/admin/menuz/menuz/menu_builder.html:61
+#: templates/admin/menuz/menuz/menu_builder.html:99
 msgid "URL"
 msgstr "URL"
 
@@ -58,16 +58,21 @@ msgstr "URL"
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: templates/admin/menuz/menuz/menu_builder.html:50
-msgid "Custom Link"
-msgstr "Externer Link"
+#: templates/admin/menuz/menuz/menu_builder.html:52
+#: templates/admin/menuz/menuz/menu_builder.html:71
+msgid "Filter"
+msgstr "Filter"
 
-#: templates/admin/menuz/menuz/menu_builder.html:66
-#: templates/admin/menuz/menuz/menu_builder.html:83
-#: templates/admin/menuz/menuz/menu_builder.html:101
+#: templates/admin/menuz/menuz/menu_builder.html:62
+#: templates/admin/menuz/menuz/menu_builder.html:81
+#: templates/admin/menuz/menuz/menu_builder.html:104
 msgid "Add to Menu"
 msgstr "Zum Menü hinzufügen"
 
-#: templates/admin/menuz/menuz/menu_builder.html:73
+#: templates/admin/menuz/menuz/menu_builder.html:70
 msgid "Inner Links"
 msgstr "Interner Link"
+
+#: templates/admin/menuz/menuz/menu_builder.html:88
+msgid "Custom Link"
+msgstr "Externer Link"
