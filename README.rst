@@ -123,5 +123,4 @@ CALLING MENU ITEMS IN TEMPLATE
 TODO:
 -----
 1. Add support for hierarchical menu creation.
-2. Add filter in model menu selector, so it's will be easier to find record to use as menu item.
 
