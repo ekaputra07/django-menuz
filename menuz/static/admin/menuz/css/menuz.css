@@ -8,7 +8,6 @@
 input#save_menu_btn{
     padding:10px 10px;
     font-weight:bold;
-    color:green;
 }
 img.loading, img.menu_update_loading{
     display:none;
