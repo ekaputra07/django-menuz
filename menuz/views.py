@@ -1,7 +1,9 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.utils import simplejson
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.template import RequestContext
 
 from menuz.models import Menuz, MenuzItem
 from menuz.forms import CustomMenuForm
@@ -105,7 +107,11 @@ def add_menuz(request):
 def reorder_menuz(request):
     if request.is_ajax():
         if request.method == 'POST':
+        
             menus = request.POST.get('order','')
+            changed_item_id = request.POST.get('item_id', 0)
+            changed_parent_id = request.POST.get('parent_id', None)
+            
             if menus:
                 try:
                     menu_ids = menus.split(',')
@@ -115,6 +121,10 @@ def reorder_menuz(request):
                         try:
                             menu = MenuzItem.objects.get(pk=m_id)
                             menu.order = count
+                            
+                            if m_id == changed_item_id:
+                                menu.parent_id = changed_parent_id
+                                
                             menu.save()
                             count += 1
                         except:
@@ -125,6 +135,7 @@ def reorder_menuz(request):
                     pass
             return HttpResponse(simplejson.dumps({'status':'Failed re-ordering menus!'}),
                                 content_type='application/javascript; charset=utf-8;')
+                                
 @login_required
 def delete_menuz(request):
     if request.is_ajax():
@@ -140,6 +151,7 @@ def delete_menuz(request):
 
         return HttpResponse(simplejson.dumps({'status':'failed'}),
                             content_type='application/javascript; charset=utf-8;')
+                            
 @login_required
 def update_menuz(request):
     if request.is_ajax():
@@ -179,3 +191,50 @@ def update_menuz(request):
                 return HttpResponse(simplejson.dumps({'status':'failed'}),
                                 content_type='application/javascript; charset=utf-8;')
 
+
+# Hierarchy menu rendering for django-menuz admin panel
+def render_children(parent, menu_items, request):
+    """
+    rendering the childrens menu recursively.
+    """
+    
+    childs = []
+    output = []
+    
+    for menu in menu_items:
+        if menu.parent == parent:
+            childs.append(menu)
+
+    if childs:
+        output.append('<ol>')
+        for child in childs:
+            output.append('<li rel="%s">' % child.id)
+            output.append(render_to_string('admin/menuz/menuz/menu_item.html', {'item': child}, context_instance=RequestContext(request)))
+            output.append(render_children(child, menu_items, request))
+            output.append('</li>')
+        output.append('</ol>')
+    
+    return ''.join(output)
+    
+
+@login_required
+def reload_menuz(request, container_id):
+
+    if request.is_ajax() and  request.method == 'GET':
+        
+        menu_items = MenuzItem.objects.filter(menu__id=container_id).order_by('order')
+        output = []
+        
+        if menu_items:
+            output.append('<ol class="sortable">')
+            for menu in menu_items:
+                if not menu.parent:
+                    output.append('<li rel="%s">' % menu.id)
+                    output.append(render_to_string('admin/menuz/menuz/menu_item.html', {'item': menu}, context_instance=RequestContext(request)))
+                    output.append(render_children(menu, menu_items, request))
+                    output.append('</li>')
+            output.append('</ol>')
+        
+        return HttpResponse(u''.join(output))
+    else:
+        raise Http404

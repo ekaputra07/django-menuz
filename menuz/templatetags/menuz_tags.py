@@ -1,11 +1,15 @@
 from django import template
 from django.core.urlresolvers import reverse
 from django.conf import settings
+
 from menuz.models import Menuz, MenuzItem
 from menuz.registry import menuz
-from menuz.utils import get_menu_by_position
+from menuz.utils import get_menu_by_position, get_menu_options
+from menuz.utils import get_menu_components
 
 register = template.Library()
+
+########################## This tag is for Django-Menuz Admin Panel ###########
 
 @register.inclusion_tag('admin/menuz/menuz/menu_builder.html')
 def menu_builder(object_id):
@@ -34,13 +38,9 @@ def menu_builder(object_id):
     if hasattr(settings, 'AVAILABLE_INNERLINKS'):
         data['innerlinks'] = getattr(settings, 'AVAILABLE_INNERLINKS')
 
-    #get MenuItems
-    menu_items = MenuzItem.objects.filter(menu__id=object_id).order_by('order')
-    data['menu_items'] = menu_items
-
     return data
 
-
+###############################################################################
 
 """
 Get Menu tag to use in front end and return value as context to give template designer
@@ -54,7 +54,8 @@ def get_menu(parser, token):
     args = token.split_contents()
 
     if len(args) != 4:
-        raise template.TemplateSyntaxError('get_menu tag usage not valid!. Usage : get_menu [menu_id] as [varname]')
+        raise template.TemplateSyntaxError('get_menu tag usage not valid!.\
+                                 Usage : get_menu [menu_id] as [varname]')
 
     return MenuNode(args[1], args[3])
 
@@ -69,21 +70,51 @@ class MenuNode(template.Node):
         context[self.varname] = items
         return ''
 
+# recursively render menu children
+def render_menu_children(parent, items, menu_tag):
+    childs = []
+    output = []
+        
+    for menu in items:
+        if menu['parent_id'] == parent['id']:
+            childs.append(menu)
+
+    if childs:
+        output.append('<%s class="ul_sublevel">' % menu_tag)
+        for menu in childs:
+            output.append('<li class="li_sublevel menu_%s">' % menu['id'])
+            output.append('<a href="%s" title="%s">%s</a>' % (menu['url'], menu['title'], menu['title']))
+            output.append(render_menu_children(menu, items, menu_tag))
+            output.append('</li>')
+        output.append('</%s>' % menu_tag)
+        
+    return u'\n'.join(output)
+
+
 @register.simple_tag
 def list_menu(position_id):
     """
     Simple and generic menu tags to print menu items as a html list.
-    this tags must be surrounded by <ul> tags.
     example:
-    <ul>
     {% list_menu 'top_menu' %}
-    </ul>
-    """
+    """ 
     title, items = get_menu_by_position(position_id)
+    menu_tag, menu_class = get_menu_components(position_id)
+    
     output = []
-    for item in items:
-        output.append(u'<li><a href="%s" title="%s">%s</a></li>' % (item['url'], item['title'], item['title']))
+    output.append('<%s class="ul_toplevel %s">' % (menu_tag, menu_class))
+    
+    for menu in items:
+        if menu['parent_id'] == 0:
+            output.append('<li class="li_toplevel menu_%s">' % menu['id'])
+            output.append('<a href="%s" title="%s">%s</a>' % (menu['url'], menu['title'], menu['title']))
+            output.append(render_menu_children(menu, items, menu_tag))
+            output.append('</li>')
+            
+    output.append('</%s>' % menu_tag)
+          
     return u'\n'.join(output)
+
 
 @register.filter
 def truncatechars_right(value, length):

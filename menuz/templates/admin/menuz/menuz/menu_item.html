@@ -1,0 +1,35 @@
+{% load adminmedia %}
+{% load menuz_tags %}
+{% load i18n %}
+    <div class="menu_item {{item.content_type}}_{{item.id}}" rel="{{item.id}}">
+    <h2>
+    <span class="move"></span>
+    <span class="title">{{item.title|truncatechars_right:40}}</span>
+    <a href="javascript:;" class="delete" title="Delete" onclick="delete_menu('{{item.content_type}}', {{item.id}});"/></a>
+    <a href="javascript:;" class="edit" title="Edit" onclick="toggle_menu_editor('{{item.content_type}}', {{item.id}});"/></a>
+    </h2>
+    <div class="menu_editor {{item.content_type}}_{{item.id}}">
+    <!-- form -->
+    {% csrf_token %}
+    <input type="hidden" name="mtype" value="{{item.content_type}}">
+    <input type="hidden" name="item_id" value="{{item.id}}">
+    <p>
+    <label for="id_{{item.content_type}}_title_{{item.id}}">{% trans 'Title' %}</label>
+    <input type="text" name="{{item.content_type}}_title_{{item.id}}" id="id_{{item.content_type}}_title_{{item.id}}" value="{{item.title}}" class="vTextField"/>
+    </p>
+
+    {% if item.content_type == 'custom' %}
+    <p>
+    <label for="id_{{item.content_type}}_url_{{item.id}}">{% trans 'URL' %}</label>
+    <input type="text" name="{{item.content_type}}_url_{{item.id}}" id="id_{{item.content_type}}_url_{{item.id}}" value="{{item.url}}" class="vTextField"/>
+    </p>
+    {% endif %}
+
+    <p>
+    <input type="button" name="btn_update" value="{% trans 'Update' %}" onclick="update_menu('{{item.content_type}}',{{item.id}});"/>
+    <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="menu_update_loading loading_{{item.id}}"/>
+    </p>
+    <!-- enddform -->
+    </div>
+    </div>
+

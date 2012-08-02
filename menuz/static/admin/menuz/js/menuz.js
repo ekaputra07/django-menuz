@@ -18,36 +18,58 @@
                 toReturn.push( encodeURIComponent(this.name) + "=" + encodeURIComponent( val ) );
             }
         });
-
         return toReturn.join("&").replace(/%20/g, "+");
-
     }
-
 })(django.jQuery);
+
 //-------------------------- end serialize enything --------------------------//
 
-$(function() {
-    //Drag and Drop actions
-	$( ".menu_container" ).sortable({
-	        items: " .menu_item:not(.ui-state-disabled)",
-            stop: function(event, ui) {
-                reorder_menu();
+/* @description: Django-menuz Javascript
+ * @author: Eka Putra
+ * @version: 2.0
+ * @website: http://balitechy.com/
+ * @license : BSD
+*/
+
+// Activate Nested Sortable
+function activate_sortable(){
+	$( ".sortable" ).nestedSortable({
+	        items: "li",
+	        handle: 'div',
+	        toleranceElement: '> div',
+	        placeholder: 'placeholder',
+            update: function(event, ui) {
+                // this is the tricky part, since there's no direct connection between
+                // sortable and menu ID in DB, we use "rel" attributes in "li" to hold the menu ID
+                // and sent it to server when hierarchy changed.
+                var parent_tag = $(ui.item).parent().parent().prop('tagName');
+                var item_id = $(ui.item).attr('rel');
+                
+                if( parent_tag == 'LI'){ 
+                    var parent_id = $(ui.item).parent().parent().attr('rel');
+                }else{
+                    var parent_id = '';
+                }
+                reorder_menu(item_id, parent_id);
             }
     });
+}
 
-	//Menu Hover
-    $('.menu_container .menu_item').hover(
-        function(){
-            $(this).addClass('hovered');
-            },
-        function(){
-            $(this).removeClass('hovered');
-            }
-        );
+// Load Menu item list via ajax
+// afterajax finish, activate sortable
+function load_menu(){
+    $('.menu_items').load(window.reload_menuz, function(){
+        activate_sortable();
+    });
+}
 
+
+// On page load
+$(function() {
+    load_menu();
 });
 
-function reorder_menu(){
+function reorder_menu(item_id, parent_id){
     $('.menu_loading').show();
     var menu = new Array();
     $('.menu_container .menu_item').each(function(){
@@ -58,9 +80,11 @@ function reorder_menu(){
     //If menu empty, than don't reorder.
     if(menu.length > 0){
         var menu_str = menu.join(',');
-        data = {
+        var data = {
             'csrfmiddlewaretoken': window.csrf_token,
-            'order' : menu_str
+            'order' : menu_str,
+            'item_id': item_id,
+            'parent_id' : parent_id
         }
 
         $.post(window.reorder_menuz, data, function(response){
@@ -72,9 +96,7 @@ function reorder_menu(){
     }else{
         $('.menu_loading').hide();
     }
-
 }
-
 
 function set_error(mtype, fields){
     $('.menu_'+mtype).addClass('error');
@@ -102,52 +124,6 @@ function truncatechars_right(text, length){
   }
 }
 
-function render_menu(menu_data){
-
-    for(menu in menu_data){
-        var menu_id = menu_data[menu]['id'];
-        var title = truncatechars_right(menu_data[menu]['title'], 40);
-        var title_value = menu_data[menu]['title'];
-        var url = menu_data[menu]['url'];
-        var content_type = menu_data[menu]['content_type'];
-        var content_id = menu_data[menu]['content_id'];
-
-        html = '\
-        <div class="menu_item '+content_type+'_'+menu_id+'" rel="'+menu_id+'">\
-        <h2><span class="move"></span>\
-        <span class="title">'+title+'</span>\
-        <a href="javascript:;" class="delete" title="Delete" onclick="delete_menu(\''+content_type+'\', '+menu_id+');"/></a>\
-        <a href="javascript:;" class="edit" title="Edit" onclick="toggle_menu_editor(\''+content_type+'\', '+menu_id+');"/></a></h2>\
-        <div class="menu_editor '+content_type+'_'+menu_id+'">\
-        <!-- form -->\
-        <input type="hidden" name="csrfmiddlewaretoken" value="'+window.csrf_token+'">\
-        <input type="hidden" name="mtype" value="'+content_type+'">\
-        <input type="hidden" name="item_id" value="'+menu_id+'">\
-        <p>\
-        <label for="id_'+content_type+'_title_'+menu_id+'">Title</label>\
-        <input type="text" name="'+content_type+'_title_'+menu_id+'" id="id_'+content_type+'_title_'+menu_id+'" value="'+title_value+'" class="vTextField"/>\
-        </p>';
-
-        if(content_type == 'custom'){
-            html += '<p>\
-            <label for="id_'+content_type+'_url_'+menu_id+'">URL</label>\
-            <input type="text" name="'+content_type+'_url_'+menu_id+'" id="id_'+content_type+'_url_'+menu_id+'" value="'+url+'" class="vTextField"/>\
-            </p>';
-        }
-
-        html += '<p>\
-        <input type="button" name="btn_update" value="Update" onclick="update_menu(\''+content_type+'\', '+menu_id+');"/>\
-        <img src="'+window.__admin_media_prefix__+'menuz/images/loading.gif" class="menu_update_loading loading_'+menu_id+'"/>\
-        </p>\
-        <!-- enddform -->\
-        </div>\
-        </div>';
-
-        $('.menu_container').append(html);
-        reorder_menu();
-    }
-}
-
 function add_to_menu(mtype){
     reset_error();
     $('.menu_'+mtype+' img.loading').show();
@@ -155,7 +131,7 @@ function add_to_menu(mtype){
     $.post(window.add_menuz, formdata, function(response){
         $('.menu_'+mtype+' img.loading').hide();
         if(response.status == 'success'){
-            render_menu(response.menu_data);
+            load_menu();
             reset_checkbox();
         }else{
             set_error(mtype, response.fields)
@@ -169,7 +145,7 @@ function delete_menu(mtype, item_id){
         $('.menu_loading').hide();
         if(response.status == 'success'){
             $('.menu_item.'+mtype+'_'+item_id).css('background','#cc3434').animate({opacity:0}, 500, function(){
-                    $(this).remove();
+                    $(this).parent().remove();
                     reorder_menu();
             });
         }
@@ -189,10 +165,13 @@ function filter(keyword, menu){
         }
     });
 }
+
 /*--------- Update menu item----------*/
+
 function input_error(input_parent){
     $('.'+input_parent+' input.vTextField').addClass('error');
 }
+
 function reset_input_error(input_parent){
     $('.menu_editor input.vTextField').removeClass('error');
 }
@@ -211,4 +190,3 @@ function update_menu(type, item_id){
         }
     },'json');
 }
-

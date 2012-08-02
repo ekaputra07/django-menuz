@@ -9,9 +9,13 @@
 
 <script type="text/javascript" src="{% admin_media_prefix %}menuz/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="{% admin_media_prefix %}menuz/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}menuz/js/jquery.mjs.nestedSortable.js"></script>
 <script src="{% admin_media_prefix %}menuz/js/menuz.js" type="text/javascript"></script>
 <script>
 var csrf_token = '{{csrf_token}}';
+{% if object_id %}
+var reload_menuz = '{% url reload_menuz object_id %}';
+{% endif %}
 var add_menuz = '{% url add_menuz %}';
 var reorder_menuz = '{% url reorder_menuz %}';
 var delete_menuz = '{% url delete_menuz %}';
