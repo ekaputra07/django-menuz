@@ -114,6 +114,10 @@ example:
 
 CALLING MENU ITEMS IN TEMPLATE
 ------------------------------
+**example calling menu items as html list**::
+
+    {% load menuz_tags %}
+    {% list_menu top_menu %}
 
 **example calling menu items as template context**
 
@@ -130,7 +134,3 @@ This implementation does not support hierarchical menu, please use "list_menu" t
         {% endfor %}
     </ul>
 
-**example calling menu items as html list**::
-
-    {% load menuz_tags %}
-    {% list_menu top_menu %}
