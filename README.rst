@@ -1,5 +1,6 @@
-DJANGO MENUZ
-============
+DJANGO MENUZ - Dev. version
+===========================
+Note: If you want to use current stable version of Django Menuz, please use ver.2.0.0 and support only django 1.3.
 
 Django Menuz is another menu app for Django.
 
@@ -31,14 +32,27 @@ Once you install it via setup.py, easy_install or pip.
 
 ::
 
-    #Available menus on site
     AVAILABLE_MENUS = (
-        ('top_menu', u'Main top menu'),
-        ('side_menu', u'Menu at sidebar'),
-        ('position_id_must_be_unique', u'Position title goes here'),
-        ...
-        ...
-        etc.
+    {
+        'id': 'top_menu',
+        'title': _('Top Menu'),
+        'type': 'UL',          #optional, default UL. alternative 'OL'
+        'class': 'someclass', #optional, will resulting '<ul class="ul_toplevel someclass">'
+    },
+
+    {
+        'id': 'footer_menu',
+        'title': _('Footer Menu'),
+        'type': 'UL',
+        'class': None,
+    },
+
+    {
+        'id': 'left_menu',
+        'title': _('Left Menu'),
+        'type': 'OL',
+        'class': None,
+    },
     )
 
 * If you have few fix/static url into your application and want to include so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
@@ -101,7 +115,10 @@ example:
 CALLING MENU ITEMS IN TEMPLATE
 ------------------------------
 
-**example calling menu items as template context**::
+**example calling menu items as template context**
+
+This implementation does not support hierarchical menu, please use "list_menu" tag if you need that feature.
+::
 
     {% load menuz_tags %}
     {% get_menu top_menu as tmenu %}
@@ -116,11 +133,4 @@ CALLING MENU ITEMS IN TEMPLATE
 **example calling menu items as html list**::
 
     {% load menuz_tags %}
-    <ul>
-        {% list_menu top_menu %}
-    </ul>
-
-TODO:
------
-1. Add support for hierarchical menu creation.
-
+    {% list_menu top_menu %}
