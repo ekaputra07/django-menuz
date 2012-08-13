@@ -1,6 +1,6 @@
-DJANGO MENUZ - Dev. version
-===========================
-Note: If you want to use current stable version of Django Menuz, please use ver-1.0.0 and support only django 1.3.
+DJANGO MENUZ
+============
+**Note**: If you want to use current stable version of Django Menuz, please use ver-1.0.0 and support only django 1.3.
 
 Django Menuz is another menu app for Django.
 
@@ -105,11 +105,15 @@ example:
 
 ::
 
-    from django.db.models import permalink
+    from django.db import models
 
-    @permalink
-    get_absolute_url():
-        return ('some_page', None, {'slug': self.slug})
+    class Page(models.Model):
+        title = models.CharField(max_length=50)
+        slug = models.SlugField()
+
+        @models.permalink
+        def get_absolute_url(self):
+            return ('some_page', None, {'slug': self.slug})
 
 
 CALLING MENU ITEMS IN TEMPLATE
