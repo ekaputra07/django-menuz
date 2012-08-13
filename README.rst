@@ -37,7 +37,9 @@ Once you install it via setup.py, easy_install or pip.
         'id': 'top_menu',
         'title': _('Top Menu'),
         'type': 'UL',          #optional, default UL. alternative 'OL'
-        'class': 'someclass', #optional, will resulting '<ul class="ul_toplevel someclass">'
+        'class': 'someclass',  #optional, output: <ul class="ul_toplevel someclass">
+        'before_link': 'BBB',  #optional, can be text or html tag. output: <li>BBB<a href="...">Title</a></li>
+        'after_link': 'AAA',   #optional, can be text or html tag. output: <li><a href="...">Title</a>AAA</li>
     },
 
     {
