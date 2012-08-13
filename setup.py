@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "django-menuz",
-    version = "0.2.0",
+    version = "1.0.0",
     url = 'https://github.com/ekaputra07/django-menuz',
 	download_url = 'https://github.com/ekaputra07/django-menuz/downloads',
     license = 'BSD',
@@ -16,7 +16,7 @@ setup(
     include_package_data = True,
     zip_safe = False,
     classifiers = [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',

@@ -1,6 +1,6 @@
 DJANGO MENUZ - Dev. version
 ===========================
-Note: If you want to use current stable version of Django Menuz, please use ver.2.0.0 and support only django 1.3.
+Note: If you want to use current stable version of Django Menuz, please use ver-1.0.0 and support only django 1.3.
 
 Django Menuz is another menu app for Django.
 

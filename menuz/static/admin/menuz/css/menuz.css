@@ -5,10 +5,7 @@
     clear:both;
     height:0;
 }
-input#save_menu_btn{
-    padding:10px 10px;
-    font-weight:bold;
-}
+
 img.loading, img.menu_update_loading{
     display:none;
 }

@@ -12,6 +12,16 @@ try:
 except ImportError:
     egosetting_available = False
 
+def get_menu_positions():
+    """ Get All menu positions """
+    
+    try:
+        available_menus = settings.AVAILABLE_MENUS
+    except Exception:
+        return ((None, None))
+    else:
+        return ((menu['id'], menu['title']) for menu in available_menus)
+
 def get_menu_by_position(position):
     """
     Return all menu items based on position ID.
@@ -98,4 +108,6 @@ def get_menu_components(position_id):
         list_tag = 'ul'
         
     return (list_tag, lclass)
+    
+
     
