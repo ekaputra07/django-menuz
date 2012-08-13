@@ -5,7 +5,7 @@ from django.conf import settings
 from menuz.models import Menuz, MenuzItem
 from menuz.registry import menuz
 from menuz.utils import get_menu_by_position, get_menu_options
-from menuz.utils import get_menu_components
+from menuz.utils import get_menu_components, count_menu_children
 
 register = template.Library()
 
@@ -99,17 +99,26 @@ def list_menu(position_id):
     {% list_menu 'top_menu' %}
     """ 
     title, items = get_menu_by_position(position_id)
-    menu_tag, menu_class = get_menu_components(position_id)
+    menu_tag, menu_class, before_link, after_link = get_menu_components(position_id)
     
     output = []
     output.append('<%s class="ul_toplevel %s">' % (menu_tag, menu_class))
+    top_menu_count = count_menu_children(items, 0)
     
+    counter = 0
     for menu in items:
         if menu['parent_id'] == 0:
-            output.append('<li class="li_toplevel menu_%s">' % menu['id'])
-            output.append('<a href="%s" title="%s">%s</a>' % (menu['url'], menu['title'], menu['title']))
+            if counter == 0:
+                output.append('<li class="li_toplevel first menu_%s">' % menu['id'])
+            elif counter == top_menu_count-1:
+                output.append('<li class="li_toplevel last menu_%s">' % menu['id'])
+            else:
+                output.append('<li class="li_toplevel menu_%s">' % menu['id'])
+            output.append('%s<a href="%s" title="%s">%s</a>%s' % (before_link, menu['url'], menu['title'], menu['title'], after_link))
             output.append(render_menu_children(menu, items, menu_tag))
             output.append('</li>')
+            counter += 1
+    print counter
             
     output.append('</%s>' % menu_tag)
           

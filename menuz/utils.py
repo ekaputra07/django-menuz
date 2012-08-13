@@ -95,19 +95,22 @@ def get_menu_components(position_id):
         return (None, None)
     
     list_type = menu_options.get('type', 'UL')
-    list_class = menu_options.get('class', None)
-    
-    if list_class:
-        lclass = list_class
-    else:
-        lclass = ''
+    list_class = menu_options.get('class', '')
+    before_link = menu_options.get('before_link', '')
+    after_link = menu_options.get('after_link', '')
     
     if list_type != 'UL':
         list_tag = 'ol'
     else:
         list_tag = 'ul'
         
-    return (list_tag, lclass)
+    return (list_tag, list_class, before_link, after_link)
     
-
+def count_menu_children(menu_items, parent_menu_id):
+    """ Count menu clhildren in current menu items based on parent menu ID"""
+    counter = 0
+    for menu in menu_items:
+        if menu['parent_id'] == parent_menu_id:
+            counter += 1
+    return counter
     
