@@ -118,7 +118,6 @@ def list_menu(position_id):
             output.append(render_menu_children(menu, items, menu_tag))
             output.append('</li>')
             counter += 1
-    print counter
             
     output.append('</%s>' % menu_tag)
           
