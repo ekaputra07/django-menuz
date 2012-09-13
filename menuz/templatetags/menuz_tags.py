@@ -71,7 +71,7 @@ class MenuNode(template.Node):
         return ''
 
 # recursively render menu children
-def render_menu_children(parent, items, menu_tag):
+def render_menu_children(request, parent, items, menu_tag):
     childs = []
     output = []
         
@@ -82,22 +82,29 @@ def render_menu_children(parent, items, menu_tag):
     if childs:
         output.append('<%s class="ul_sublevel">' % menu_tag)
         for menu in childs:
-            output.append('<li class="li_sublevel menu_%s">' % menu['id'])
+        
+            current_class = ''
+            if request.path == menu.get('url'):
+                current_class = 'current'
+
+            output.append('<li class="li_sublevel menu_%s %s">' % (menu['id'], current_class))
             output.append('<a href="%s" title="%s">%s</a>' % (menu['url'], menu['title'], menu['title']))
-            output.append(render_menu_children(menu, items, menu_tag))
+            output.append(render_menu_children(request, menu, items, menu_tag))
             output.append('</li>')
         output.append('</%s>' % menu_tag)
         
     return u'\n'.join(output)
 
 
-@register.simple_tag
-def list_menu(position_id):
+@register.simple_tag(takes_context=True)
+def list_menu(context, position_id):
     """
     Simple and generic menu tags to print menu items as a html list.
     example:
     {% list_menu 'top_menu' %}
     """ 
+    request  = context.get('request')
+
     title, items = get_menu_by_position(position_id)
     menu_tag, menu_class, before_link, after_link = get_menu_components(position_id)
     
@@ -108,14 +115,19 @@ def list_menu(position_id):
     counter = 0
     for menu in items:
         if menu['parent_id'] == 0:
+        
+            current_class = ''
+            if request.path == menu.get('url'):
+                current_class = 'current'
+
             if counter == 0:
-                output.append('<li class="li_toplevel first menu_%s">' % menu['id'])
+                output.append('<li class="li_toplevel first menu_%s %s">' % (menu['id'], current_class))
             elif counter == top_menu_count-1:
-                output.append('<li class="li_toplevel last menu_%s">' % menu['id'])
+                output.append('<li class="li_toplevel last menu_%s %s">' % (menu['id'], current_class))
             else:
-                output.append('<li class="li_toplevel menu_%s">' % menu['id'])
+                output.append('<li class="li_toplevel menu_%s %s">' % (menu['id'], current_class))
             output.append('%s<a href="%s" title="%s">%s</a>%s' % (before_link, menu['url'], menu['title'], menu['title'], after_link))
-            output.append(render_menu_children(menu, items, menu_tag))
+            output.append(render_menu_children(request, menu, items, menu_tag))
             output.append('</li>')
             counter += 1
             
