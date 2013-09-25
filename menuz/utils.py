@@ -1,16 +1,11 @@
 from django.core.urlresolvers import reverse
+from django.conf import settings
+
 from menuz.models import Menuz, MenuzItem
 from menuz.registry import menuz
 from menuz.registry import get_menuz_object_model
-from django.conf import settings
 
-# used in conjunction with egocms app
-# part of Egomedia Bali's inhouse CMS project
-egosetting_available = True
-try:
-    from egosettings.egosetting import get_setting
-except ImportError:
-    egosetting_available = False
+
 
 def get_menu_positions():
     """ Get All menu positions """
@@ -49,23 +44,11 @@ def get_menu_by_position(position):
                     model = get_menuz_object_model(obj.content_type)
                     try:
                         item = model.objects.get(pk=obj.content_id)
-                        
-                        # works with egocms
-                        # this will check if current page setted as homepage_id
-                        # if yes, then display site base url
-                        if egosetting_available:
-                            homepage_id = get_setting('site_homepage')
-                            if homepage_id == item.id:
-                                all_items.append({'id': obj.id, 'url': reverse('index'), 'title': obj.title, 'parent_id': has_parent(obj)})
-                            else:
-                                all_items.append({'id': obj.id, 'url': item.get_absolute_url(), 'title': obj.title, 'parent_id': has_parent(obj)})
-                        else:
-                            all_items.append({'id': obj.id, 'url': item.get_absolute_url(), 'title': obj.title, 'parent_id': has_parent(obj)})
-                            
+                        all_items.append({'id': obj.id, 'obj_id': item.pk, 'url': item.get_absolute_url(), 'title': obj.title, 'parent_id': has_parent(obj)})
                     except Exception, err:
-                        print err
+                        pass
     except Exception, err:
-        print err
+        pass
     #return a tuple of title and its items
     return (menu_title, all_items)
     
@@ -113,4 +96,3 @@ def count_menu_children(menu_items, parent_menu_id):
         if menu['parent_id'] == parent_menu_id:
             counter += 1
     return counter
-    
