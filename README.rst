@@ -7,7 +7,7 @@ Django Menuz is another menu app for Django.
 It mainly inspired by how easy menu creation ini WordPress. Django Menuz provides
 template tags to call menu in specified location.
 
-With it's drag and drop features, now its easy to assign menu items for specified location in template drag and drop it if you want to re-order the menu item position.
+With it's drag and drop features, its easy to re-order the menu item position.
 
 INSTALLATION AND USAGE:
 -----------------------
