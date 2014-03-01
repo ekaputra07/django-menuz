@@ -1,6 +1,6 @@
 DJANGO MENUZ
 ============
-**Note**: I'm currenlt working to make this app works with latest version of Django (1.6.x).
+**Note**: I'm currently working to make this app works with latest version of Django (1.6.x). Will release the version 2.0 soon.
 
 Django Menuz is another menu app for Django.
 
