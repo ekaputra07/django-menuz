@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from menuz.models import Menuz, MenuzItem
+from menuz.tests import ModelSample
+
 
 class TestViews(TestCase):
 
@@ -24,38 +26,32 @@ class TestViews(TestCase):
         self.assertEqual(resp.status_code, 404)
 
         # Add custom menu
-        resp = self.client.post(url, {
-                                        'mtype': 'custom',
-                                        'menu_id': self.menu.pk,
-                                        'custom_title': 'Hello menu',
-                                        'custom_url': 'http://google.com/'
-                                     },
+        resp = self.client.post(url, {'mtype': 'custom',
+                                      'menu_id': self.menu.pk,
+                                      'custom_title': 'Hello menu',
+                                      'custom_url': 'http://google.com/', },
                                 HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('success' in resp.content)
 
         # Add innerlink menu
-        resp = self.client.post(url, {
-                                        'mtype': 'innerlink',
-                                        'menu_id': self.menu.pk,
-                                        'innerlink': '/some_page/$Some page',
-                                     },
+        resp = self.client.post(url, {'mtype': 'innerlink',
+                                      'menu_id': self.menu.pk,
+                                      'innerlink': '/some_page/$Some page', },
                                 HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('success' in resp.content)
 
         # Add Model menu
-        # model_sample = ModelSample(title='Some title')
-        # model_sample.save()
+        model_sample = ModelSample(title='Some title')
+        model_sample.save()
 
-        # resp = self.client.post(url, {
-        #                                 'mtype': ModelSample.__name__.lower(),
-        #                                 'menu_id': self.menu.pk,
-        #                                 ModelSample.__name__.lower(): model_sample.pk,
-        #                              },
-        #                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        # self.assertEqual(resp.status_code, 200)
-        # self.assertTrue('success' in resp.content)
+        resp = self.client.post(url, {'mtype': ModelSample.__name__.lower(),
+                                      'menu_id': self.menu.pk,
+                                       ModelSample.__name__.lower(): model_sample.pk, },
+                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('success' in resp.content)
 
     def test_reload_menu(self):
         url = reverse('reload_menuz', kwargs={'container_id': self.menu.pk, })
