@@ -1,6 +1,6 @@
 DJANGO MENUZ
 ============
-**Note**: Latest Stable version v1.0.3 and support only django 1.3.
+**Note**: I'm currenlt working to make this app works with latest version of Django (1.6.x).
 
 Django Menuz is another menu app for Django.
 
@@ -13,14 +13,9 @@ INSTALLATION AND USAGE:
 -----------------------
 Once you install it via setup.py, easy_install or pip.
 
-* add **menuz** into your **INSTALLED_APPS** Django settings.py file.
+* Add **menuz** into your **INSTALLED_APPS** Django settings.py file.
 
-* add codes below into your project **urls.py** :
-
-::
-
-    from menuz import registry
-    registry.autodiscover()
+* Please make sure 'django.core.context_processors.request' available in your 'TEMPLATE_CONTEXT_PROCESSORS'.
 
 * Also add url config below into projects urls configuration.
 
@@ -122,8 +117,8 @@ CALLING MENU ITEMS IN TEMPLATE
 ------------------------------
 **example calling menu items as html list**::
 
-    {% load menuz_tags %}
-    {% list_menu top_menu %}
+    {% load 'menuz_tags' %}
+    {% list_menu 'top_menu' %}
 
 **example calling menu items as template context**
 
@@ -131,7 +126,7 @@ This implementation does not support hierarchical menu, please use "list_menu" t
 ::
 
     {% load menuz_tags %}
-    {% get_menu top_menu as tmenu %}
+    {% get_menu 'top_menu' as tmenu %}
 
     <h2>{{tmenu_title}}</h2>
     <ul>

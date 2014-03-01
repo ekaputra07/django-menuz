@@ -59,6 +59,7 @@ def get_menu(parser, token):
 
     return MenuNode(args[1], args[3])
 
+
 class MenuNode(template.Node):
     def __init__(self, position_id, varname):
         self.position_id = position_id
@@ -69,6 +70,7 @@ class MenuNode(template.Node):
         context[self.varname+'_title'] = title
         context[self.varname] = items
         return ''
+
 
 # recursively render menu children
 def render_menu_children(request, parent, items, menu_tag):

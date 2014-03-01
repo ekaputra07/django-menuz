@@ -1,5 +1,6 @@
+import json
+
 from django.http import HttpResponse, Http404
-from django.utils import simplejson
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
@@ -13,8 +14,8 @@ from menuz.registry import get_menuz_object_model
 def add_menuz(request):
     if request.is_ajax():
         if request.method == 'POST':
-            mtype = request.POST.get('mtype','')
-            menu_id = request.POST.get('menu_id',0)
+            mtype = request.POST.get('mtype', '')
+            menu_id = request.POST.get('menu_id', 0)
             menu = Menuz.objects.get(pk=menu_id)
 
             #if menu type custom
@@ -36,11 +37,11 @@ def add_menuz(request):
                         'content_id': menuitem.content_id
                     }
                     menu_data = [data]
-                    return HttpResponse(simplejson.dumps({'status':'success', 'menu_data': menu_data}),
+                    return HttpResponse(json.dumps({'status':'success', 'menu_data': menu_data}),
                                         content_type='application/javascript; charset=utf-8;')
                 else:
                     fields = [field for field in customform.errors]
-                    return HttpResponse(simplejson.dumps({'status':'failed', 'fields':fields}),
+                    return HttpResponse(json.dumps({'status':'failed', 'fields':fields}),
                                         content_type='application/javascript; charset=utf-8;')
 
             #if menu type Innerlink, similar to custom but different treatment
@@ -68,7 +69,7 @@ def add_menuz(request):
                             'content_id': menuitem.content_id
                         }
                         menu_data.append(data)
-                    return HttpResponse(simplejson.dumps({'status':'success', 'menu_data': menu_data}),
+                    return HttpResponse(json.dumps({'status':'success', 'menu_data': menu_data}),
                                         content_type='application/javascript; charset=utf-8;')
 
             #if menu type Model Menu
@@ -96,10 +97,10 @@ def add_menuz(request):
                             'content_id': menuitem.content_id
                         }
                         menu_data.append(data)
-                    return HttpResponse(simplejson.dumps({'status':'success', 'menu_data': menu_data}),
+                    return HttpResponse(json.dumps({'status':'success', 'menu_data': menu_data}),
                                         content_type='application/javascript; charset=utf-8;')
 
-            return HttpResponse(simplejson.dumps({'status':'failed'}),
+            return HttpResponse(json.dumps({'status':'failed'}),
                                     content_type='application/javascript; charset=utf-8;')
 
 
@@ -129,11 +130,11 @@ def reorder_menuz(request):
                             count += 1
                         except:
                             pass
-                    return HttpResponse(simplejson.dumps({'status':'success'}),
+                    return HttpResponse(json.dumps({'status':'success'}),
                                         content_type='application/javascript; charset=utf-8;')
                 except:
                     pass
-            return HttpResponse(simplejson.dumps({'status':'Failed re-ordering menus!'}),
+            return HttpResponse(json.dumps({'status':'Failed re-ordering menus!'}),
                                 content_type='application/javascript; charset=utf-8;')
                                 
 @login_required
@@ -144,12 +145,12 @@ def delete_menuz(request):
             try:
                 menu_obj = MenuzItem.objects.get(pk=item_id)
                 menu_obj.delete()
-                return HttpResponse(simplejson.dumps({'status':'success'}),
+                return HttpResponse(json.dumps({'status':'success'}),
                             content_type='application/javascript; charset=utf-8;')
             except MenuzItem.DoesNotExist:
                 pass
 
-        return HttpResponse(simplejson.dumps({'status':'failed'}),
+        return HttpResponse(json.dumps({'status':'failed'}),
                             content_type='application/javascript; charset=utf-8;')
                             
 @login_required
@@ -185,10 +186,10 @@ def update_menuz(request):
                         item.save()
                         status = True
             if status:
-                return HttpResponse(simplejson.dumps({'status':'success', 'new_title': item.title}),
+                return HttpResponse(json.dumps({'status':'success', 'new_title': item.title}),
                                 content_type='application/javascript; charset=utf-8;')
             else:
-                return HttpResponse(simplejson.dumps({'status':'failed'}),
+                return HttpResponse(json.dumps({'status':'failed'}),
                                 content_type='application/javascript; charset=utf-8;')
 
 

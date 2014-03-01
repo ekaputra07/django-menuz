@@ -17,6 +17,7 @@ def get_menu_positions():
     else:
         return ((menu['id'], menu['title']) for menu in available_menus)
 
+
 def get_menu_by_position(position):
     """
     Return all menu items based on position ID.
@@ -68,6 +69,7 @@ def get_menu_options(position_id):
                 break
     return
 
+
 def get_menu_components(position_id):
     """
     Prepare menu component based on menu options in settings.
@@ -89,6 +91,7 @@ def get_menu_components(position_id):
         
     return (list_tag, list_class, before_link, after_link)
     
+
 def count_menu_children(menu_items, parent_menu_id):
     """ Count menu clhildren in current menu items based on parent menu ID"""
     counter = 0

@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load adminmedia %}
+{% load i18n admin_static %}
 {% load menuz_tags %}
 <div id="content-main">
 <fieldset class="module menuz">
@@ -28,7 +27,7 @@
         </div>
         <p>
         <input type="button" name="{{menu.type}}_add" id="id_{{menu.type}}_add" value="{% trans 'Add to Menu' %}" onclick="add_to_menu('{{menu.type}}');"/>
-         <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="loading"/>
+         <img src="{% static 'admin/menuz/images/loading.gif' %}" class="loading"/>
         </p>
         </div>
     {% endfor %}
@@ -47,7 +46,7 @@
     </div>
     <p>
     <input type="button" name="innerlink_add" id="id_innerlink_add" value="{% trans 'Add to Menu' %}" onclick="add_to_menu('innerlink');"/>
-    <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="loading"/>
+    <img src="{% static 'admin/menuz/images/loading.gif' %}" class="loading"/>
     </p>
     </div>
     {% endif %}
@@ -70,7 +69,7 @@
     </div>
     <p>
     <input type="button" name="custom_add" id="id_custom_add" value="{% trans 'Add to Menu' %}" onclick="add_to_menu('custom');"/>
-    <img src="{% admin_media_prefix %}menuz/images/loading.gif" class="loading"/>
+    <img src="{% static 'admin/menuz/images/loading.gif' %}" class="loading"/>
     </p>
     </div>
 

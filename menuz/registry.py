@@ -32,17 +32,17 @@ class MenuzRegistry(object):
 menuz = MenuzRegistry()
 
 def autodiscover():
-
     import copy
     from django.conf import settings
     from django.utils.importlib import import_module
 
     for app in settings.INSTALLED_APPS:
+        before_import_registry = copy.copy(menuz.registry)
         try:
-            before_import_registry = copy.copy(menuz.registry)
             import_module('%s.menu' % app)
         except:
             menuz.registry = before_import_registry
+
 
 def get_menuz_object_model(content_type):
     for menu in menuz.registry:
