@@ -18,14 +18,12 @@ Once you install it via setup.py, easy_install or pip.
 * Please make sure 'django.core.context_processors.request' available in your 'TEMPLATE_CONTEXT_PROCESSORS'.
 
 * Also add url config below into projects urls configuration.
-
-::
-
+  ::
+  
     url(r'', include('menuz.urls')),
 
 * Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter. example:
-
-::
+  ::
 
     AVAILABLE_MENUS = (
     {
@@ -53,8 +51,7 @@ Once you install it via setup.py, easy_install or pip.
     )
 
 * If you have few fix/static url into your application and want to include so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
-
-::
+  ::
 
     AVAILABLE_INNERLINKS = (
         ('/this_page/', 'This Page'),
@@ -69,9 +66,11 @@ Once you install it via setup.py, easy_install or pip.
 * Above links must inbound link, not links to other sites(outbound link).
 * For Outbound link menu, use Custom link in menu creation admin page.
 
-* To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
+MODEL MENU
+----------
 
-::
+* To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
+  ::
 
     # file: menu.py
     from menuz.registry import menuz
@@ -80,8 +79,7 @@ Once you install it via setup.py, easy_install or pip.
     menuz.register(Product)
 
 * Or if you want to do some filtering before registering it into menuz do as follows (file: menu.py).
-
-::
+  ::
 
     from menuz.registry import menuz
     from catalog.models import Product
@@ -99,7 +97,6 @@ IMPORTANT:
 To make Model menu items links correctly to its url, your model must utilize **get_absolute_url()** function. Because this is the only standard way to retrieve object urls, at least for django-menuz.
 
 example:
-
 ::
 
     from django.db import models
@@ -115,7 +112,8 @@ example:
 
 CALLING MENU ITEMS IN TEMPLATE
 ------------------------------
-**example calling menu items as html list**::
+**example calling menu items as html list**
+::
 
     {% load 'menuz_tags' %}
     {% list_menu 'top_menu' %}
@@ -126,7 +124,7 @@ This implementation does not support hierarchical menu, please use "list_menu" t
 ::
 
     {% load menuz_tags %}
-    {% get_menu 'top_menu' as tmenu %}
+    {% get_menu top_menu as tmenu %}
 
     <h2>{{tmenu_title}}</h2>
     <ul>
@@ -135,3 +133,6 @@ This implementation does not support hierarchical menu, please use "list_menu" t
         {% endfor %}
     </ul>
 
+Please note on the above example, when you assign a menu to a variable named **somevar**, you can display the menu title by adding *_title* suffix after the variable name.
+
+In the case above, the variable name is *tmenu* and the title will be available in variable named *tmenu_title*.

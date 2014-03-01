@@ -167,7 +167,6 @@ function filter(keyword, menu){
 }
 
 /*--------- Update menu item----------*/
-
 function input_error(input_parent){
     $('.'+input_parent+' input.vTextField').addClass('error');
 }

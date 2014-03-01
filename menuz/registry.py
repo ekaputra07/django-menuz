@@ -12,7 +12,11 @@ registry.autodiscover()
 This will try to import all file in apps that named menu.py.
 """
 
+
 class MenuzRegistry(object):
+    """
+    An instance of this class will store al registered menu information.
+    """
 
     def __init__(self):
         self.registry = []
@@ -23,7 +27,7 @@ class MenuzRegistry(object):
                 pass
             else:
                 meta = {
-                    'type' : model.__name__.lower(),
+                    'type': model.__name__.lower(),
                     'model': model,
                     'custom_source': custom_source
                 }
@@ -31,7 +35,11 @@ class MenuzRegistry(object):
 
 menuz = MenuzRegistry()
 
+
 def autodiscover():
+    """
+    Discover registered menu.
+    """
     import copy
     from django.conf import settings
     from django.utils.importlib import import_module
@@ -48,5 +56,4 @@ def get_menuz_object_model(content_type):
     for menu in menuz.registry:
         if menu['type'] == content_type:
             return menu['model']
-            break
     return False
