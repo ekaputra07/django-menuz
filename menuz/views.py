@@ -106,6 +106,7 @@ def add_menuz(request):
 
         return HttpResponse(json.dumps({'status': 'failed'}),
                                 content_type='application/javascript; charset=utf-8;')
+    raise Http404
 
 
 @login_required
@@ -237,7 +238,7 @@ def reload_menuz(request, container_id):
     """
     Refresh menu data after changes.
     """
-    if request.is_ajax() and  request.method == 'GET':
+    if request.is_ajax() and request.method == 'GET':
         
         menu_items = MenuzItem.objects.filter(menu__id=container_id).order_by('order')
         output = []
