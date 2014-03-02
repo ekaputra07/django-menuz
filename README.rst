@@ -1,6 +1,5 @@
 DJANGO MENUZ
 ============
-**Note**: I'm currently working to make this app works with latest version of Django (1.6.x). Will release the version 2.0 soon.
 
 Django Menuz is another menu app for Django.
 
@@ -15,7 +14,7 @@ Once you install it via setup.py, easy_install or pip.
 
 * Add **menuz** into your **INSTALLED_APPS** Django settings.py file.
 
-* Please make sure 'django.core.context_processors.request' available in your 'TEMPLATE_CONTEXT_PROCESSORS'.
+* Please make sure ``django.core.context_processors.request`` available in your ``TEMPLATE_CONTEXT_PROCESSORS``.
 
 * Also add url config below into projects urls configuration.
   ::
@@ -50,7 +49,7 @@ Once you install it via setup.py, easy_install or pip.
     },
     )
 
-* If you have few fix/static url into your application and want to include so it's will be selectable as a menu items, add **AVAILABLE_INNERLINKS** in your project **settings.py**.
+* If you have few fix/static url into your application and want to include so it's will be selectable as a menu items, add ``AVAILABLE_INNERLINKS`` in your project ``settings.py``.
   ::
 
     AVAILABLE_INNERLINKS = (
@@ -69,7 +68,7 @@ Once you install it via setup.py, easy_install or pip.
 MODEL MENU
 ----------
 
-* To create a menu based on Django model items, simply create **menu.py** in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
+* To create a menu based on Django model items, simply create ``menu.py`` in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
   ::
 
     # file: menu.py
@@ -94,7 +93,7 @@ that way, the menu item selector will not display all available products, but wi
 
 IMPORTANT:
 ----------
-To make Model menu items links correctly to its url, your model must utilize **get_absolute_url()** function. Because this is the only standard way to retrieve object urls, at least for django-menuz.
+To make Model menu items links correctly to its url, your model must utilize ``get_absolute_url()`` function. Because this is the only standard way to retrieve object urls, at least for django-menuz.
 
 example:
 ::
@@ -133,6 +132,15 @@ This implementation does not support hierarchical menu, please use "list_menu" t
         {% endfor %}
     </ul>
 
-Please note on the above example, when you assign a menu to a variable named **somevar**, you can display the menu title by adding *_title* suffix after the variable name.
+Please note on the above example, when you assign a menu to a variable named ``somevar``, you can display the menu title by adding ``_title`` suffix after the variable name.
 
-In the case above, the variable name is *tmenu* and the title will be available in variable named *tmenu_title*.
+In the case above, the variable name is ``tmenu`` and the title will be available in variable named ``tmenu_title``.
+
+TESTING
+-------
+In case you want to run a test for this app, you need to install Django-nose first https://pypi.python.org/pypi/django-nose (please refer to Django-nose docs on how to install).
+
+Then run the test by running command below:
+::
+
+  python manage.py test menuz
