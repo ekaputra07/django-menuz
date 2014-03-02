@@ -12,7 +12,7 @@ INSTALLATION AND USAGE:
 -----------------------
 Once you install it via setup.py, easy_install or pip.
 
-* Add **menuz** into your **INSTALLED_APPS** Django settings.py file.
+* Add ``menuz`` into your ``INSTALLED_APPS`` Django ``settings.py`` file.
 
 * Please make sure ``django.core.context_processors.request`` available in your ``TEMPLATE_CONTEXT_PROCESSORS``.
 
@@ -21,7 +21,7 @@ Once you install it via setup.py, easy_install or pip.
   
     url(r'', include('menuz.urls')),
 
-* Register all available menu positions in project **settings.py** by adding **AVAILABLE_MENUS** parameter. example:
+* Register all available menu positions in project ``settings.py`` by adding ``AVAILABLE_MENUS`` parameter. example:
   ::
 
     AVAILABLE_MENUS = (
@@ -68,7 +68,7 @@ Once you install it via setup.py, easy_install or pip.
 MODEL MENU
 ----------
 
-* To create a menu based on Django model items, simply create ``menu.py`` in application directory, this is in the same level as application urls.py and register our model as following example (file: menu.py).
+* To create a menu based on Django model items, simply create ``menu.py`` in application directory, this is in the same level as application urls.py and register our model as following example (file: ``menu.py``).
   ::
 
     # file: menu.py
@@ -77,7 +77,7 @@ MODEL MENU
 
     menuz.register(Product)
 
-* Or if you want to do some filtering before registering it into menuz do as follows (file: menu.py).
+* Or if you want to do some filtering before registering it into menuz do as follows (file: ``menu.py``).
   ::
 
     from menuz.registry import menuz
@@ -119,7 +119,7 @@ CALLING MENU ITEMS IN TEMPLATE
 
 **example calling menu items as template context**
 
-This implementation does not support hierarchical menu, please use "list_menu" tag if you need that feature.
+This implementation does not support hierarchical menu, please use ``list_menu`` tag if you need that feature.
 ::
 
     {% load menuz_tags %}

@@ -7,7 +7,7 @@ setup(
     name = "django-menuz",
     version = "2.0.0",
     url = 'https://github.com/ekaputra07/django-menuz',
-	download_url = 'https://github.com/ekaputra07/django-menuz/downloads',
+	download_url = 'https://github.com/ekaputra07/django-menuz/releases',
     license = 'BSD',
     description = "Drag and drop menu manager for Django.",
     author = 'Eka Putra',
